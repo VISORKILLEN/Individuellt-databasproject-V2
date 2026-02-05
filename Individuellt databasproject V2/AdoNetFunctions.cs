@@ -43,6 +43,23 @@ namespace Individuellt_databasproject_V2
             }
         }
 
+        public static void ShowGradeForStudents(int studentId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = @"
+                    SELECT sub.SubjectName, g.Grade, g.Dates, s.FirstName, s.LastName
+                    FROM Grade g
+                    JOIN Subjects sub ON g.SubjectsID = s.ID
+                    WHERE g.StudentID = @StudentId";
+
+                SqlCommand cmd = new SqlCommand(sql, connection);
+                connection.Open();
+
+
+
+            }
+        }
 
     }
 }
