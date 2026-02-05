@@ -43,6 +43,7 @@ namespace Individuellt_databasproject_V2
             }
         }
 
+        // Show grades for a specific student
         public static void ShowGradeForStudents(int studentId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -54,9 +55,19 @@ namespace Individuellt_databasproject_V2
                     WHERE g.StudentID = @StudentId";
 
                 SqlCommand cmd = new SqlCommand(sql, connection);
+                cmd.Parameters.AddWithValue("@StudentId", studentId);
+                
                 connection.Open();
-
-
+                SqlDataReader reader = cmd.ExecuteReader();
+                
+                Console.WriteLine("\nBetyg:");
+                while (reader.Read())
+                {
+                    Console.WriteLine($"Ämne: {reader["SubjectName"]}," +
+                        $"Betyg: {reader["Grade"]}," +
+                        $"Lärare: {reader["Firstname"]} {reader["LastName"]}," +
+                        $"Datum: {reader["Dates"]}");
+                }
 
             }
         }

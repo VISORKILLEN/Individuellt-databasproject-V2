@@ -15,6 +15,8 @@
                     "2. Visa lärare på de olika avdelningarna\n" +
                     "3. Visa klass information \n" +
                     "4. Visa anställda\n" +
+                    "5. Visa betyg på elever\n" +
+                    "6.\n" +
                     "0. Avsluta");
 
                 // Read user input
@@ -44,6 +46,10 @@
                         break;
 
                     case "5":
+                        AdoNetFunctions.ShowGradeForStudents(1);
+                        break;
+
+                    case "6":
 
                         break;
 
