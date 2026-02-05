@@ -1,10 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Individuellt_databasproject_V2
 {
@@ -45,45 +40,65 @@ namespace Individuellt_databasproject_V2
 
         public static void ShowGradeForStudents(int studentId)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
+            using SqlConnection connection = new SqlConnection(connectionString);
 
-                // SQL query to get grades for a specific student, including subject and teacher information
-                string sql = @"
+
+            // SQL query to get grades for a specific student, including subject and teacher information
+            string sql = @"
                     SELECT 
+                        stu.FirstName AS StudentFirstName,
+                        stu.LastName  AS StudentLastName,
                         sub.SubjectName,
                         g.Grade,
                         g.Dates,
                         st.FirstName AS TeacherFirstName,
                         st.LastName  AS TeacherLastName
                     FROM Grade g
+                    JOIN Student stu ON g.StudentID = stu.ID
                     JOIN Subjects sub ON g.SubjectID = sub.ID
                     JOIN Staff st     ON g.StaffID = st.ID
                     WHERE g.StudentID = @StudentId
                     ORDER BY g.Dates;";
 
-                SqlCommand cmd = new SqlCommand(sql, connection);
-                
-                // Add parameter to prevent SQL injection
-                cmd.Parameters.AddWithValue("@StudentId", studentId);
+            SqlCommand cmd = new SqlCommand(sql, connection);
 
-                // Open connection and execute query
-                connection.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
+            // Add parameter to prevent SQL injection
+            cmd.Parameters.AddWithValue("@StudentId", studentId);
 
-                // Print grade details
-                Console.WriteLine("\nBetyg:");
-                while (reader.Read())
+            // Open connection and execute query
+            connection.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            // Print grade details
+            bool gradesFound = false;
+            string studentName = "";
+
+            while (reader.Read())
+            {
+                // Print student name only once
+                if (!gradesFound)
                 {
-                    Console.WriteLine(
-                        $"Ämne: {reader["SubjectName"]}, " +
-                        $"Betyg: {reader["Grade"]}, " +
-                        $"Lärare: {reader["TeacherFirstName"]} {reader["TeacherLastName"]}, " +
-                        $"Datum: {reader["Dates"]}"
-                    );
+                    studentName = $"{reader["StudentFirstName"]} {reader["StudentLastName"]}";
+                    Console.WriteLine($"Betyg för student: {studentName}\n");
+                    gradesFound = true;
                 }
+
+                // Print each grade entry
+                Console.WriteLine(
+                    $"Ämne: {reader["SubjectName"]}, " +
+                    $"Betyg: {reader["Grade"]}, " +
+                    $"Lärare: {reader["TeacherFirstName"]} {reader["TeacherLastName"]}, " +
+                    $"Datum: {reader["Dates"]}"
+                );
+            }
+
+            // If no grades were found, inform the user
+            if (!gradesFound)
+            {
+                Console.WriteLine("Inga betyg hittades för den angivna studenten.");
             }
         }
     }
 }
+
 

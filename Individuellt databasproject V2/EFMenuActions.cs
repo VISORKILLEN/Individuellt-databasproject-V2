@@ -17,6 +17,7 @@ namespace Individuellt_databasproject_V2
                 .Include(s => s.Class)
                 .ToList();
 
+            // Print results
             foreach (var s in students)
             {
                 Console.WriteLine($"Student ID: {s.Id}, Namn: {s.FirstName} {s.LastName}, Klass: {s.Class?.ClassName}");
