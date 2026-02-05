@@ -46,7 +46,16 @@
                         break;
 
                     case "5":
-                        AdoNetFunctions.ShowGradeForStudents(1);
+                        Console.Write("Ange student ID för att visa betyg: ");
+                        if (int.TryParse(Console.ReadLine(), out int studentId))
+                        {
+                            AdoNetFunctions.ShowGradeForStudents(studentId);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Ogiltigt ID, försök igen.");
+                        }
+                        Console.ReadKey();
                         break;
 
                     case "6":

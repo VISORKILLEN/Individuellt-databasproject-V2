@@ -43,34 +43,47 @@ namespace Individuellt_databasproject_V2
             }
         }
 
-        // Show grades for a specific student
         public static void ShowGradeForStudents(int studentId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+
+                // SQL query to get grades for a specific student, including subject and teacher information
                 string sql = @"
-                    SELECT sub.SubjectName, g.Grade, g.Dates, s.FirstName, s.LastName
+                    SELECT 
+                        sub.SubjectName,
+                        g.Grade,
+                        g.Dates,
+                        st.FirstName AS TeacherFirstName,
+                        st.LastName  AS TeacherLastName
                     FROM Grade g
-                    JOIN Subjects sub ON g.SubjectsID = s.ID
-                    WHERE g.StudentID = @StudentId";
+                    JOIN Subjects sub ON g.SubjectID = sub.ID
+                    JOIN Staff st     ON g.StaffID = st.ID
+                    WHERE g.StudentID = @StudentId
+                    ORDER BY g.Dates;";
 
                 SqlCommand cmd = new SqlCommand(sql, connection);
-                cmd.Parameters.AddWithValue("@StudentId", studentId);
                 
+                // Add parameter to prevent SQL injection
+                cmd.Parameters.AddWithValue("@StudentId", studentId);
+
+                // Open connection and execute query
                 connection.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
-                
+
+                // Print grade details
                 Console.WriteLine("\nBetyg:");
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Ämne: {reader["SubjectName"]}," +
-                        $"Betyg: {reader["Grade"]}," +
-                        $"Lärare: {reader["Firstname"]} {reader["LastName"]}," +
-                        $"Datum: {reader["Dates"]}");
+                    Console.WriteLine(
+                        $"Ämne: {reader["SubjectName"]}, " +
+                        $"Betyg: {reader["Grade"]}, " +
+                        $"Lärare: {reader["TeacherFirstName"]} {reader["TeacherLastName"]}, " +
+                        $"Datum: {reader["Dates"]}"
+                    );
                 }
-
             }
         }
-
     }
 }
+
