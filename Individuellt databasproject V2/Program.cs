@@ -57,7 +57,7 @@
                         Console.WriteLine("Ogiltigt val, försök igen.");
                         break;
                 }
-
             }
+        }
     }
 }
