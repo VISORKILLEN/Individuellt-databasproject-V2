@@ -120,13 +120,15 @@ namespace Individuellt_databasproject_V2
 
             Console.WriteLine("Löner per avdelning:");
 
-            // Print department salary details
+            // Print salary details for each department
             while (reader.Read())
             {
+
+                // Format total and average salary to two decimal places and include "KR" for currency
                 Console.WriteLine(
                     $"Avdelning: {reader["DepartmentName"]}, " +
-                    $"Total lön på avdelning: {reader["TotalSalary"]} KR, " +
-                    $"Genomsnittlig lön på avdelning: {reader["AverageSalary"]} KR"
+                    $"Total lön på avdelning: {((decimal)reader["TotalSalary"]):N2} KR, " +
+                    $"Genomsnittlig lön på avdelning: {((decimal)reader["AverageSalary"]):N2} KR"
                 );
             }
         }
