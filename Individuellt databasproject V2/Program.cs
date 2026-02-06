@@ -15,8 +15,9 @@
                     "2. Visa lärare på de olika avdelningarna\n" +
                     "3. Visa klass information \n" +
                     "4. Visa anställda\n" +
-                    "5. Visa betyg på elever\n" +
-                    "6.\n" +
+                    "5. Visa betyg på elev\n" +
+                    "6. Se lönen på de olika avdelningarna\n" +
+                    "7.\n" +
                     "0. Avsluta");
 
                 // Read user input
@@ -59,8 +60,15 @@
                         break;
 
                     case "6":
-
+                        AdoNetFunctions.ShowDepartmentSalaries();
+                        Console.ReadKey();
                         break;
+
+                    case "7":
+
+                        Console.ReadKey();
+                        break;
+
 
                     case "0":
                         Console.WriteLine("Stänger av program, klicka valfri knapp en gång till");

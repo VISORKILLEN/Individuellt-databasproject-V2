@@ -98,6 +98,38 @@ namespace Individuellt_databasproject_V2
                 Console.WriteLine("Inga betyg hittades för den angivna studenten.");
             }
         }
+
+        public static void ShowDepartmentSalaries()
+        {
+            using SqlConnection connection = new SqlConnection(connectionString);
+
+            // SQL query to calculate total and average salary per department
+            string sql = @"
+                    SELECT 
+                        d.DepartmentName,
+                        SUM(s.Salary) AS TotalSalary,
+                        AVG(s.Salary) AS AverageSalary
+                    FROM Staff s
+                    JOIN Departments d ON s.DepartmentID = d.ID
+                    GROUP BY d.DepartmentName;";
+
+            // Create command and execute query
+            SqlCommand cmd = new SqlCommand(sql, connection);
+            connection.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            Console.WriteLine("Löner per avdelning:");
+
+            // Print department salary details
+            while (reader.Read())
+            {
+                Console.WriteLine(
+                    $"Avdelning: {reader["DepartmentName"]}, " +
+                    $"Total lön på avdelning: {reader["TotalSalary"]} KR, " +
+                    $"Genomsnittlig lön på avdelning: {reader["AverageSalary"]} KR"
+                );
+            }
+        }
     }
 }
 
