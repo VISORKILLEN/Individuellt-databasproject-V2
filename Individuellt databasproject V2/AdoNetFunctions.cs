@@ -166,6 +166,46 @@ namespace Individuellt_databasproject_V2
                 Console.WriteLine("Ingen student hittades med det ID:t");
             }
         }
+
+
+        public static void AddGrade(int studentId, int subjectId, int staffId, string grade)
+        {
+
+            using SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+
+
+            SqlTransaction transaction = connection.BeginTransaction();
+
+            // Create command to execute stored procedure
+            try
+            {
+
+                
+                SqlCommand cmd = new SqlCommand("AddGrade", connection, transaction);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                // Add parameters for the stored procedure
+                cmd.Parameters.AddWithValue("@StudentId", studentId);
+                cmd.Parameters.AddWithValue("@SubjectId", subjectId);
+                cmd.Parameters.AddWithValue("@StaffId", staffId);
+                cmd.Parameters.AddWithValue("@Grade", grade);
+                cmd.Parameters.AddWithValue("@Date", DateTime.Now);
+
+                // Execute the command to insert the grade
+                cmd.ExecuteNonQuery();
+                transaction.Commit();
+
+                Console.WriteLine("Betyg har sparats!");
+            }
+
+            // If an error occurs, roll back the transaction and display an error message
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                Console.WriteLine($"Ett fel inträffade: {ex.Message}");
+            }
+        }
     }
 }
 

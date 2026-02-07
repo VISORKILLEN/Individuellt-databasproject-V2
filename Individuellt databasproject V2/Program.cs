@@ -84,6 +84,7 @@
 
                     case "8":
 
+                        AdoNetFunctions.AddGrade();
                         Console.ReadKey();
                         break;
 
@@ -99,5 +100,7 @@
                 }
             }
         }
+
+        private static void HandleAddGrade()
     }
 }
