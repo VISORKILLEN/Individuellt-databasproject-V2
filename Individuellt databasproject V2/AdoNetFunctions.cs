@@ -38,6 +38,8 @@ namespace Individuellt_databasproject_V2
             }
         }
 
+
+        // Show grades for a specific student, including subject and teacher information
         public static void ShowGradeForStudents(int studentId)
         {
             using SqlConnection connection = new SqlConnection(connectionString);
@@ -99,6 +101,7 @@ namespace Individuellt_databasproject_V2
             }
         }
 
+        // Show total and average salary per department
         public static void ShowDepartmentSalaries()
         {
             using SqlConnection connection = new SqlConnection(connectionString);
@@ -127,9 +130,40 @@ namespace Individuellt_databasproject_V2
                 // Format total and average salary to two decimal places and include "KR" for currency
                 Console.WriteLine(
                     $"Avdelning: {reader["DepartmentName"]}, " +
-                    $"Total lön på avdelning: {((decimal)reader["TotalSalary"]):N2} KR, " +
-                    $"Genomsnittlig lön på avdelning: {((decimal)reader["AverageSalary"]):N2} KR"
+                    $"Total lön på avdelningen: {((decimal)reader["TotalSalary"]):N2} KR, " +
+                    $"Genomsnittlig lön på avdelning: {((decimal)reader["AverageSalary"]):N2} KR\n"
                 );
+            }
+        }
+
+        // Show student information by ID using a stored procedure
+        public static void ShowStudentById(int studentID)
+        {
+            using SqlConnection connection = new SqlConnection(connectionString);
+
+            // Create command to execute stored procedure
+            SqlCommand cmd = new SqlCommand("GetStudentInfoById", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@StudentId", studentID);
+
+            // Open connection and execute query
+            connection.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            // Print student details if found
+            if (reader.Read())
+            {
+                
+                Console.WriteLine($"\n\tElevinformation\n" +
+                    $"Namn: {reader["FirstName"]} {reader["LastName"]}\n" +
+                    $"Personnummer: {reader["SocialSecurityNumber"]}\n" +
+                    $"Klass: {reader["ClassName"]}");
+            }
+
+            // If no student was found, inform the user
+            else
+            {
+                Console.WriteLine("Ingen student hittades med det ID:t");
             }
         }
     }

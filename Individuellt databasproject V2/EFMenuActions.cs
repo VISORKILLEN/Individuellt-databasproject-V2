@@ -48,7 +48,6 @@ namespace Individuellt_databasproject_V2
             }
         }
 
-
         // Show all classes with their mentors
         public static void ShowAllClasses()
         {

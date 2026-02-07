@@ -17,7 +17,8 @@
                     "4. Visa anställda\n" +
                     "5. Visa betyg på elev\n" +
                     "6. Se lönen på de olika avdelningarna\n" +
-                    "7.\n" +
+                    "7. Visa information om en specifik elev\n" +
+                    "8. Sätt betyg på en elev\n" +
                     "0. Avsluta");
 
                 // Read user input
@@ -65,10 +66,26 @@
                         break;
 
                     case "7":
+                        Console.Write("Ange student ID för att visa betyg: ");
+                        string input = Console.ReadLine();
 
+                        // Validate input and call the method if it's a valid integer
+                        if (int.TryParse(input, out int studentID))
+                        {
+                            AdoNetFunctions.ShowStudentById(studentID);
+                        }
+                        // If the input is not a valid integer, display an error message
+                        else
+                        {
+                            Console.WriteLine("Ogiltigt ID, försök igen.");
+                        }
                         Console.ReadKey();
                         break;
 
+                    case "8":
+
+                        Console.ReadKey();
+                        break;
 
                     case "0":
                         Console.WriteLine("Stänger av program, klicka valfri knapp en gång till");
