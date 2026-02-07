@@ -217,7 +217,7 @@ namespace Individuellt_databasproject_V2
             connection.Open();
             SqlDataReader reader = cmd.ExecuteReader();
 
-            Console.WriteLine("\nStudenter:");
+            Console.WriteLine("Studenter:");
             while (reader.Read())
             {
                 Console.WriteLine($"{reader["ID"]}: {reader["FirstName"]} {reader["LastName"]}");
@@ -239,7 +239,7 @@ namespace Individuellt_databasproject_V2
             connection.Open();
             SqlDataReader reader = cmd.ExecuteReader();
 
-            Console.WriteLine("\nLärare:");
+            Console.WriteLine("Lärare:");
             while (reader.Read())
             {
                 Console.WriteLine($"{reader["ID"]}: {reader["FirstName"]} {reader["LastName"]}");
@@ -256,7 +256,7 @@ namespace Individuellt_databasproject_V2
             connection.Open();
             SqlDataReader reader = cmd.ExecuteReader();
 
-            Console.WriteLine("\nÄmnen:");
+            Console.WriteLine("Ämnen:");
             while (reader.Read())
             {
                 Console.WriteLine($"{reader["ID"]}: {reader["SubjectName"]}");

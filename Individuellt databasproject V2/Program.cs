@@ -48,8 +48,13 @@
                         break;
 
                     case "5":
+                        AdoNetFunctions.ShowStudentsSimple();
+
                         Console.Write("Ange student ID för att visa betyg: ");
-                        if (int.TryParse(Console.ReadLine(), out int studentId))
+                        string input = Console.ReadLine();
+                        Console.Clear();
+
+                        if (int.TryParse(input, out int studentId))
                         {
                             AdoNetFunctions.ShowGradeForStudents(studentId);
                         }
@@ -66,11 +71,15 @@
                         break;
 
                     case "7":
-                        Console.Write("Ange student ID för att visa betyg: ");
-                        string input = Console.ReadLine();
+                        AdoNetFunctions.ShowStudentsSimple();
+
+                        Console.Write("Ange student ID för visa information: ");
+                        string studentInfoInput = Console.ReadLine();
+
+                        Console.Clear();
 
                         // Validate input and call the method if it's a valid integer
-                        if (int.TryParse(input, out int studentID))
+                        if (int.TryParse(studentInfoInput, out int studentID))
                         {
                             AdoNetFunctions.ShowStudentById(studentID);
                         }
