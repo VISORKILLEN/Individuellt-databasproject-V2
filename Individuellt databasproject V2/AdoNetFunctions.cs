@@ -206,6 +206,62 @@ namespace Individuellt_databasproject_V2
                 Console.WriteLine($"Ett fel inträffade: {ex.Message}");
             }
         }
+
+        // Displays a list of all students with their ID and full name
+        public static void ShowStudentsSimple()
+        {
+            using SqlConnection connection = new SqlConnection(connectionString);
+            string sql = "SELECT ID, FirstName, LastName FROM Student ORDER BY LastName";
+
+            SqlCommand cmd = new SqlCommand(sql, connection);
+            connection.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            Console.WriteLine("\nStudenter:");
+            while (reader.Read())
+            {
+                Console.WriteLine($"{reader["ID"]}: {reader["FirstName"]} {reader["LastName"]}");
+            }
+        }
+
+        // Displays a list of all teachers
+        public static void ShowTeachersSimple()
+        {
+            using SqlConnection connection = new SqlConnection(connectionString);
+            string sql = @"
+                        SELECT s.ID, s.FirstName, s.LastName
+                        FROM Staff s
+                        JOIN Positions p ON s.PositionID = p.ID
+                        WHERE p.PositionName = 'Lärare'
+                        ORDER BY s.LastName";
+
+            SqlCommand cmd = new SqlCommand(sql, connection);
+            connection.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            Console.WriteLine("\nLärare:");
+            while (reader.Read())
+            {
+                Console.WriteLine($"{reader["ID"]}: {reader["FirstName"]} {reader["LastName"]}");
+            }
+        }
+
+        // Displays a list of all subjects with their ID and name
+        public static void ShowSubjectsSimple()
+        {
+            using SqlConnection connection = new SqlConnection(connectionString);
+            string sql = "SELECT ID, SubjectName FROM Subjects";
+
+            SqlCommand cmd = new SqlCommand(sql, connection);
+            connection.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            Console.WriteLine("\nÄmnen:");
+            while (reader.Read())
+            {
+                Console.WriteLine($"{reader["ID"]}: {reader["SubjectName"]}");
+            }
+        }
     }
 }
 
