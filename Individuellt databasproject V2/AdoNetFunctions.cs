@@ -284,6 +284,10 @@ namespace Individuellt_databasproject_V2
             cmd.Parameters.AddWithValue("@Salary", salary);
             cmd.Parameters.AddWithValue("@HireDate", hireDate);
 
+            connection.Open();
+            cmd.ExecuteNonQuery();
+
+            Console.WriteLine("Ny personal har lagt till! :)");
         }
     }
 }
