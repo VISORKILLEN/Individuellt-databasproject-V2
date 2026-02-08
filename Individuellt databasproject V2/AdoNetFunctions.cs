@@ -102,7 +102,7 @@ namespace Individuellt_databasproject_V2
         }
 
         // Show total and average salary per department
-        public static void ShowDepartmentSalaries()
+        public static void ShowMonthlyDepartmentSalaries()
         {
             using SqlConnection connection = new SqlConnection(connectionString);
 
@@ -110,8 +110,8 @@ namespace Individuellt_databasproject_V2
             string sql = @"
                     SELECT 
                         d.DepartmentName,
-                        SUM(s.Salary) AS TotalSalary,
-                        AVG(s.Salary) AS AverageSalary
+                        SUM(s.Salary) AS MonthlyTotalSalary,
+                        AVG(s.Salary) AS MonthlyAverageSalary
                     FROM Staff s
                     JOIN Departments d ON s.DepartmentID = d.ID
                     GROUP BY d.DepartmentName;";
@@ -121,7 +121,7 @@ namespace Individuellt_databasproject_V2
             connection.Open();
             SqlDataReader reader = cmd.ExecuteReader();
 
-            Console.WriteLine("Löner per avdelning:");
+            Console.WriteLine("Månadslön per avdelning:");
 
             // Print salary details for each department
             while (reader.Read())
@@ -130,8 +130,8 @@ namespace Individuellt_databasproject_V2
                 // Format total and average salary to two decimal places and include "KR" for currency
                 Console.WriteLine(
                     $"Avdelning: {reader["DepartmentName"]}, " +
-                    $"Total lön på avdelningen: {((decimal)reader["TotalSalary"]):N2} KR, " +
-                    $"Genomsnittlig lön på avdelning: {((decimal)reader["AverageSalary"]):N2} KR\n"
+                    $"Total lön på avdelningen: {((decimal)reader["MonthlyTotalSalary"]):N2} KR, " +
+                    $"Genomsnittlig lön på avdelning: {((decimal)reader["MonthlyAverageSalary"]):N2} KR\n"
                 );
             }
         }
@@ -167,21 +167,16 @@ namespace Individuellt_databasproject_V2
             }
         }
 
-
         public static void AddGrade(int studentId, int subjectId, int staffId, string grade)
         {
-
             using SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
-
 
             SqlTransaction transaction = connection.BeginTransaction();
 
             // Create command to execute stored procedure
             try
             {
-
-                
                 SqlCommand cmd = new SqlCommand("AddGrade", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -309,6 +304,7 @@ namespace Individuellt_databasproject_V2
             AdoNetFunctions.ShowSubjectsSimple();
             Console.Write("\nVälj ämnes-ID: ");
 
+            // Validate subject input
             if (!int.TryParse(Console.ReadLine(), out int subjectId))
             {
                 Console.WriteLine("Ogiltigt ämnes-ID.");
@@ -320,6 +316,7 @@ namespace Individuellt_databasproject_V2
             AdoNetFunctions.ShowTeachersSimple();
             Console.Write("\nVälj lärar-ID: ");
 
+            // Validate teacher input
             if (!int.TryParse(Console.ReadLine(), out int staffId))
             {
                 Console.WriteLine("Ogiltigt lärar-ID.");

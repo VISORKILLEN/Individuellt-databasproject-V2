@@ -49,18 +49,31 @@ namespace Individuellt_databasproject_V2
         }
 
         // Show all classes with their mentors
-        public static void ShowAllClasses()
+        public static void ShowAllCourses()
         {
             using var db = new FinalSchoolAppContext();
 
-            var classes = db.Classes.Include(c => c.Mentor).ToList();
+            var courses = db.Subjects
+                .OrderBy(s => s.SubjectName)
+                .Select(s => s.SubjectName)
+                .ToList();
 
-            // Print results
-            foreach (var c in classes)
+            Console.Clear();
+            Console.WriteLine("\tAlla kurser\n");
+
+            if (courses.Count == 0)
             {
-                Console.WriteLine($"Klass: {c.ClassName}, Mentor: {c.Mentor.FirstName} {c.Mentor.Lastname}");
+                Console.WriteLine("Inga kurser hittades.");
+                return;
+            }
+            else
+            {
+                // Print results
+                foreach (var c in courses)
+                {
+                    Console.WriteLine($"Kurser: {c}");
+                }
             }
         }
-
     }
 }

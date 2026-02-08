@@ -15,7 +15,7 @@ namespace Individuellt_databasproject_V2
                     "Välj ett alternativ:\n" +
                     "1. Visa alla studenter\n" +
                     "2. Visa lärare på de olika avdelningarna\n" +
-                    "3. Visa klass information \n" +
+                    "3. Visa alla aktiva kurser\n" +
                     "4. Visa anställda\n" +
                     "5. Visa betyg på elev\n" +
                     "6. Se lönen på de olika avdelningarna\n" +
@@ -41,7 +41,7 @@ namespace Individuellt_databasproject_V2
                         break;
 
                     case "3":
-                        EFMenuActions.ShowAllClasses();
+                        EFMenuActions.ShowAllCourses();
                         Console.ReadKey();
                         break;
 
@@ -69,7 +69,7 @@ namespace Individuellt_databasproject_V2
                         break;
 
                     case "6":
-                        AdoNetFunctions.ShowDepartmentSalaries();
+                        AdoNetFunctions.ShowMonthlyDepartmentSalaries();
                         Console.ReadKey();
                         break;
 
