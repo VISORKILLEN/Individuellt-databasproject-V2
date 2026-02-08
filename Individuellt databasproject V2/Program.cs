@@ -1,4 +1,6 @@
-﻿namespace Individuellt_databasproject_V2
+﻿using Microsoft.Data.SqlClient;
+
+namespace Individuellt_databasproject_V2
 {
     internal class Program
     {
@@ -19,6 +21,7 @@
                     "6. Se lönen på de olika avdelningarna\n" +
                     "7. Visa information om en specifik elev\n" +
                     "8. Sätt betyg på en elev\n" +
+                    "9. Lägg till ny personal\n" +
                     "0. Avsluta");
 
                 // Read user input
@@ -97,7 +100,7 @@
                         break;
 
                     case "9":
-                        HandleAddStaff();
+                        AdoNetFunctions.HandleAddStaff();
                         Console.ReadKey();
                         break;
 
@@ -159,56 +162,67 @@
             Console.ReadKey();
         }
 
-        // Method to handle user input in addstaff method
-        private static void HandleAddStaff()
-        {
-            Console.Clear();
-            Console.WriteLine("\tLägg till ny personal");
+        //// Method to handle user input in addstaff method
+        //private static void HandleAddStaff()
+        //{
+        //    Console.Clear();
+        //    Console.WriteLine("\tLägg till ny personal");
 
-            Console.Write("Förnamn: ");
-            string firstName = Console.ReadLine();
+        //    Console.Write("Förnamn: ");
+        //    string firstName = Console.ReadLine();
 
-            Console.Write("Efternamn: ");
-            string lastName = Console.ReadLine();
+        //    Console.Write("Efternamn: ");
+        //    string lastName = Console.ReadLine();
 
-            Console.Write("Personnumer: ");
-            string ssn = Console.ReadLine();
+        //    Console.Write("Personnummer: ");
+        //    string ssn = Console.ReadLine();
 
-            // Show positions and get position ID with validation
-            Console.Write("Positions ID:");
-            if(!int.TryParse(Console.ReadLine(), out int positionId))
-            {
-                Console.WriteLine("Ogiltigt Positions ID");
-                return;
-            }
+        //    // Show and pick position
+        //    int positionId;
+        //    using (SqlConnection connection = new SqlConnection(AdoNetFunctions.connectionString))
+        //    {
+        //        SqlCommand cmd = new SqlCommand("SELECT ID, PositionName FROM Positions", connection);
+        //        connection.Open();
+        //        SqlDataReader reader = cmd.ExecuteReader();
+        //        Console.WriteLine("Tillgängliga Positioner:");
+        //        while (reader.Read())
+        //            Console.WriteLine($"{reader["ID"]}: {reader["PositionName"]}");
+        //    }
 
-            // Show departments and get department ID with validation
-            Console.Write("Avdelnings ID:");
-            if(!int.TryParse(Console.ReadLine(), out int departmentId))
-            {
-                Console.WriteLine("Ogiltigt Avdelnings ID");
-                return;
-            }
+        //    // Validate position input
+        //    while (!int.TryParse(Console.ReadLine(), out positionId))
+        //        Console.Write("Ogiltigt Position ID, försök igen: ");
 
-            // Salary input with validation
-            Console.Write("Lön:");
-            if(!decimal.TryParse(Console.ReadLine(), out decimal salary))
-            {
-                Console.WriteLine("Ogiltig lön");
-                return;
-            }
+        //    // Show and pick department
+        //    int departmentId;
+        //    using (SqlConnection connection = new SqlConnection(AdoNetFunctions.connectionString))
+        //    {
+        //        SqlCommand cmd = new SqlCommand("SELECT ID, DepartmentName FROM Departments", connection);
+        //        connection.Open();
+        //        SqlDataReader reader = cmd.ExecuteReader();
+        //        Console.WriteLine("\nTillgängliga Avdelningar:");
+        //        while (reader.Read())
+        //            Console.WriteLine($"{reader["ID"]}: {reader["DepartmentName"]}");
+        //    }
 
-            // Hire date input with validation
-            Console.Write("Anställningsdatum (YYYY-MM-DD): ");
-            if(!DateTime.TryParse(Console.ReadLine(), out DateTime hireDate))
-            {
-                Console.WriteLine("Ogiltigt datumformat");
-                return;
-            }
+        //    // Validate department input
+        //    while (!int.TryParse(Console.ReadLine(), out departmentId))
+        //        Console.Write("Ogiltigt Avdelnings ID, försök igen: ");
 
-            // Call the method to add staff with the collected and validated input
-            AdoNetFunctions.AddStaff(firstName, lastName, ssn, positionId, departmentId, salary, hireDate);
-            Console.WriteLine("Personal sparad!");
-        }
+        //    // Salary input and validation
+        //    decimal salary;
+        //    while (!decimal.TryParse(Console.ReadLine(), out salary))
+        //        Console.Write("Ogiltig lön, försök igen: ");
+
+        //    // Hire date input and validation
+        //    DateTime hireDate;
+        //    while (!DateTime.TryParse(Console.ReadLine(), out hireDate))
+        //        Console.Write("Ogiltigt datumformat, försök igen (YYYY-MM-DD): ");
+
+        //    // Add staff to the database
+        //    AdoNetFunctions.AddStaff(firstName, lastName, ssn, positionId, departmentId, salary, hireDate);
+        //    Console.WriteLine("\n Ny personal har lagts till!");
+        //    Console.ReadKey();
+        //}
     }
 }
