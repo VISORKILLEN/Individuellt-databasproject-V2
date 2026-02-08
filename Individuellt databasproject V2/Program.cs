@@ -95,7 +95,7 @@ namespace Individuellt_databasproject_V2
                         break;
 
                     case "8":
-                        HandleAddGrade();
+                        AdoNetFunctions.HandleAddGrade();
                         Console.ReadKey();
                         break;
 
@@ -115,51 +115,6 @@ namespace Individuellt_databasproject_V2
                         break;
                 }
             }
-        }
-
-        //Method to handle user input in addgrade method
-        private static void HandleAddGrade()
-        {
-            Console.Clear();
-
-            //Show and pick student
-            AdoNetFunctions.ShowStudentsSimple();
-            Console.Write("\nVälj student ID: ");
-
-            if (!int.TryParse(Console.ReadLine(), out int studentId))
-            {
-                Console.WriteLine("Ogiltigt student-ID.");
-                return;
-            }
-            Console.Clear();
-
-            //Show and pick subject
-            AdoNetFunctions.ShowSubjectsSimple();
-            Console.Write("\nVälj ämnes-ID: ");
-
-            if (!int.TryParse(Console.ReadLine(), out int subjectId))
-            {
-                Console.WriteLine("Ogiltigt ämnes-ID.");
-                return;
-            }
-            Console.Clear();
-
-            //Show and pick teacher
-            AdoNetFunctions.ShowTeachersSimple();
-            Console.Write("\nVälj lärar-ID: ");
-
-            if (!int.TryParse(Console.ReadLine(), out int staffId))
-            {
-                Console.WriteLine("Ogiltigt lärar-ID.");
-                return;
-            }
-            Console.Clear();
-
-            Console.Write("Ange betyg (t.ex A–F): ");
-            string grade = Console.ReadLine();
-
-            AdoNetFunctions.AddGrade(studentId, subjectId, staffId, grade);
-            Console.ReadKey();
         }
     }
 }
