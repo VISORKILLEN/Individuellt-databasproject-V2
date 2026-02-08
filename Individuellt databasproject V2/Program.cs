@@ -96,6 +96,11 @@
                         Console.ReadKey();
                         break;
 
+                    case "9":
+                        HandleAddStaff();
+                        Console.ReadKey();
+                        break;
+
                     case "0":
                         Console.WriteLine("Stänger av program, klicka valfri knapp en gång till");
                         Console.ReadKey();
@@ -152,6 +157,58 @@
 
             AdoNetFunctions.AddGrade(studentId, subjectId, staffId, grade);
             Console.ReadKey();
+        }
+
+        // Method to handle user input in addstaff method
+        private static void HandleAddStaff()
+        {
+            Console.Clear();
+            Console.WriteLine("\tLägg till ny personal");
+
+            Console.Write("Förnamn: ");
+            string firstName = Console.ReadLine();
+
+            Console.Write("Efternamn: ");
+            string lastName = Console.ReadLine();
+
+            Console.Write("Personnumer: ");
+            string ssn = Console.ReadLine();
+
+            // Show positions and get position ID with validation
+            Console.Write("Positions ID:");
+            if(!int.TryParse(Console.ReadLine(), out int positionId))
+            {
+                Console.WriteLine("Ogiltigt Positions ID");
+                return;
+            }
+
+            // Show departments and get department ID with validation
+            Console.Write("Avdelnings ID:");
+            if(!int.TryParse(Console.ReadLine(), out int departmentId))
+            {
+                Console.WriteLine("Ogiltigt Avdelnings ID");
+                return;
+            }
+
+            // Salary input with validation
+            Console.Write("Lön:");
+            if(!decimal.TryParse(Console.ReadLine(), out decimal salary))
+            {
+                Console.WriteLine("Ogiltig lön");
+                return;
+            }
+
+            // Hire date input with validation
+            Console.Write("Anställningsdatum (YYYY-MM-DD): ");
+            if(!DateTime.TryParse(Console.ReadLine(), out DateTime hireDate))
+            {
+                Console.WriteLine("Ogiltigt datumformat");
+                return;
+            }
+
+            // Call the method to add staff with the collected and validated input
+            AdoNetFunctions.AddStaff(firstName, lastName, ssn, positionId, departmentId, salary, hireDate);
+            Console.WriteLine("Personal sparad!");
         }
     }
 }

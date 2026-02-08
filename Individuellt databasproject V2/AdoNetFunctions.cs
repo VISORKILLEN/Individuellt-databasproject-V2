@@ -278,7 +278,7 @@ namespace Individuellt_databasproject_V2
 
             cmd.Parameters.AddWithValue("@FirstName", firstName);
             cmd.Parameters.AddWithValue("@LastName", lastName);
-            cmd.Parameters.AddWithValue("@SocailSecurityNumber", ssn);
+            cmd.Parameters.AddWithValue("@SocialSecurityNumber", ssn);
             cmd.Parameters.AddWithValue("@PositionID", positionId);
             cmd.Parameters.AddWithValue("@DepartmentID", departmentId);
             cmd.Parameters.AddWithValue("@Salary", salary);
