@@ -339,17 +339,18 @@ namespace Individuellt_databasproject_V2
 
             // Salary input and validation
             decimal salary;
+            Console.Write("Lön: ");
             while (!decimal.TryParse(Console.ReadLine(), out salary))
                 Console.Write("Ogiltig lön, försök igen: ");
 
             // Hire date input and validation
             DateTime hireDate;
+            Console.Write("Anställningsdatum (YYYY-MM-DD): ");
             while (!DateTime.TryParse(Console.ReadLine(), out hireDate))
                 Console.Write("Ogiltigt datumformat, försök igen (YYYY-MM-DD): ");
 
             // Add staff to the database
-            AdoNetFunctions.AddStaff(firstName, lastName, ssn, positionId, departmentId, salary, hireDate);
-            Console.WriteLine("\n Ny personal har lagts till!");
+            AddStaff(firstName, lastName, ssn, positionId, departmentId, salary, hireDate);
             Console.ReadKey();
         }
     }
