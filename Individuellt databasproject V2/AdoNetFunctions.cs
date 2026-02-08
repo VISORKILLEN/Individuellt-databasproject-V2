@@ -262,6 +262,29 @@ namespace Individuellt_databasproject_V2
                 Console.WriteLine($"{reader["ID"]}: {reader["SubjectName"]}");
             }
         }
+
+        public static void AddStaff(
+            string firstName,
+            string lastName,
+            string ssn,
+            int positionId,
+            int departmentId,
+            decimal salary,
+            DateTime hireDate)
+        {
+            using SqlConnection connection = new SqlConnection(connectionString);
+            SqlCommand cmd = new SqlCommand("AddStaff", connection);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@FirstName", firstName);
+            cmd.Parameters.AddWithValue("@LastName", lastName);
+            cmd.Parameters.AddWithValue("@SocailSecurityNumber", ssn);
+            cmd.Parameters.AddWithValue("@PositionID", positionId);
+            cmd.Parameters.AddWithValue("@DepartmentID", departmentId);
+            cmd.Parameters.AddWithValue("@Salary", salary);
+            cmd.Parameters.AddWithValue("@HireDate", hireDate);
+
+        }
     }
 }
 
